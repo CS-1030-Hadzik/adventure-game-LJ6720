@@ -6,11 +6,12 @@ Description:
 This is a text-based adventure game where the player makes choices
 to navigate through a mysterious forest.
 """
+# TODO: Inside the game loop:
+#       - If the user types "i", print the contents of the inventory
+#       - If the user chooses option 1, call add_to_inventory("lantern")
+#       - If the user chooses option 2, call add_to_inventory("map")
 
-# TODO: Define a function called add_to_inventory(item) that:
-#       - Takes an item (string) as a parameter
-#       - Adds the item to the inventory list
-#       - Prints a message saying the item was picked up
+inventory = []  # global variable
 
 def welcome_player():
     # Welcome message and introduction
@@ -28,23 +29,38 @@ def welcome_player():
 def describe_area():
     # Describe the starting area
     starting_area = """
-    You find yourself in a dark forest.
-    The sound of rustling leaves fills the air.
-    A faint path lies ahead, leading deeper into the unknown...
+    You find yourself in a dark forest...
+    You see two paths ahead:
     """
     print(starting_area)
 
-name = welcome_player()
+def add_to_inventory(item):         # - Takes an item (string) as a parameter
+    inventory.append(item)          # - Adds the item to the inventory list
+    print("You picked up", item + "!")   # - Prints a message saying the item was picked up
+
+
+player_name = welcome_player() #returns player_name
 describe_area()
 
-# Ask the player for their first decision
-decision = input("Do you wish to take the path? (yes or no): ").lower()
 
-# conditional evaluate
-# Respond based on the player's decision
-if decision == "yes": # = assignment operator == equivalentLo
-    print(f"Brave choice, {name}! You step onto the path and venture forward.")
-elif decision == "no":
-    print(name + ", you decide to wait. Perhaps courage will find you later.") # Concatenation example
-else:
-    print("Confused, you stand still, unsure of what to do.")
+while (True):
+    # Ask the player for their first decision
+    decision = input("\t1. Take the left path into the dark woods\n"
+                    "\t2. Take the right path towards the mountain pass\n"
+                    "\t3. Stay where you are \n"
+                    "\tType 'i' to view your inventory ").lower()
+
+    # conditional evaluate
+    # Respond based on the player's decision
+    if decision == "1": # = assignment operator == equivalent
+        print(f"You go into the dark woods")
+        add_to_inventory("lantern")
+    elif decision == "2":
+        print("You got towards the mountain pass") # Concatenation example
+        add_to_inventory("map")
+    elif decision == "3":
+        print("Confused, you stand still, unsure of what to do.")
+    elif decision == "i":
+        print(inventory)
+    else:
+        print("That is not a valid choice")
