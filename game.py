@@ -35,18 +35,7 @@ def add_to_inventory(item, player):         # - Takes an item (string) as a para
     player.inventory.append(item)          # - Adds the item to the inventory list
     print("You picked up", item + "!")   # - Prints a message saying the item was picked up
 
-
-# TODO: (Optional Stretch) Add a check before certain choices
-#       - Example: If player.has_lantern is False, prevent entering a cave
-#       - Print a message like “It’s too dark to continue without a lantern.”
-
-# TODO: Update all print statements that used player_name to use player.name
-
-# TODO: Commit and push your code with a message like:
-#       REF player class added and game state flags implemented
-
-name = welcome_player() #returns a player object
-player1 = Player(name)
+player1 = welcome_player() #returns a player object
 describe_area()
 
 
