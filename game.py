@@ -6,12 +6,7 @@ Description:
 This is a text-based adventure game where the player makes choices
 to navigate through a mysterious forest.
 """
-# TODO: Inside the game loop:
-#       - If the user types "i", print the contents of the inventory
-#       - If the user chooses option 1, call add_to_inventory("lantern")
-#       - If the user chooses option 2, call add_to_inventory("map")
-
-inventory = []  # global variable
+from Player import Player
 
 def welcome_player():
     # Welcome message and introduction
@@ -24,7 +19,9 @@ def welcome_player():
     # Use an f-string to display the same message in a more readable way
     print(f"Welcome, {player_name}! Your journey begins now.")
 
-    return player_name
+    player = Player(player_name)
+
+    return player
 
 def describe_area():
     # Describe the starting area
@@ -34,12 +31,22 @@ def describe_area():
     """
     print(starting_area)
 
-def add_to_inventory(item):         # - Takes an item (string) as a parameter
-    inventory.append(item)          # - Adds the item to the inventory list
+def add_to_inventory(item, player):         # - Takes an item (string) as a parameter
+    player.inventory.append(item)          # - Adds the item to the inventory list
     print("You picked up", item + "!")   # - Prints a message saying the item was picked up
 
 
-player_name = welcome_player() #returns player_name
+# TODO: (Optional Stretch) Add a check before certain choices
+#       - Example: If player.has_lantern is False, prevent entering a cave
+#       - Print a message like “It’s too dark to continue without a lantern.”
+
+# TODO: Update all print statements that used player_name to use player.name
+
+# TODO: Commit and push your code with a message like:
+#       REF player class added and game state flags implemented
+
+name = welcome_player() #returns a player object
+player1 = Player(name)
 describe_area()
 
 
@@ -54,13 +61,15 @@ while (True):
     # Respond based on the player's decision
     if decision == "1": # = assignment operator == equivalent
         print(f"You go into the dark woods")
-        add_to_inventory("lantern")
+        add_to_inventory("lantern", player1)
+        player1.has_lantern = True
     elif decision == "2":
         print("You got towards the mountain pass") # Concatenation example
-        add_to_inventory("map")
+        add_to_inventory("map", player1)
+        player1.has_map = True
     elif decision == "3":
         print("Confused, you stand still, unsure of what to do.")
     elif decision == "i":
-        print(inventory)
+        print(player1.inventory)
     else:
         print("That is not a valid choice")
