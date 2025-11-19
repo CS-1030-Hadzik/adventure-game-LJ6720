@@ -32,12 +32,37 @@ def describe_area():
     print(starting_area)
 
 def add_to_inventory(item, player):         # - Takes an item (string) as a parameter
-    player.inventory.append(item)          # - Adds the item to the inventory list
-    print("You picked up", item + "!")   # - Prints a message saying the item was picked up
+    # only want to append if the item is not in the list
+    if not item in player.inventory:
+        player.inventory.append(item)          # - Adds the item to the inventory list
+        print("You picked up", item + "!")   # - Prints a message saying the item was picked up
+
+def explore_dark_woods(player):
+    print(f"You go into the dark woods")
+    add_to_inventory("lantern", player)
+    player.has_lantern = True
+
+def explore_mountain_pass(player):
+    print("You got towards the mountain pass") # Concatenation example
+    add_to_inventory("map", player)
+    player.has_map = True
+
+def explore_cave(player):
+    if player.has_lantern:
+        print("You go into the dark cave")
+        add_to_inventory("treasure", player)
+    else:
+        print("It's too dark in the cave. Try to find something to illuminate your way")
+
+def explore_hidden_valley(player):
+    if player.has_map:
+        print("You go into the hidden valley with a bowl of salad")
+        add_to_inventory("rare herbs", player)
+    else:
+        print("You can't find the valley without directions")
 
 player1 = welcome_player() #returns a player object
 describe_area()
-
 
 while (True):
     # Ask the player for their first decision
@@ -51,25 +76,13 @@ while (True):
     # conditional evaluate
     # Respond based on the player's decision
     if decision == "1": # = assignment operator == equivalent
-        print(f"You go into the dark woods")
-        add_to_inventory("lantern", player1)
-        player1.has_lantern = True
+        explore_dark_woods(player1)
     elif decision == "2":
-        print("You got towards the mountain pass") # Concatenation example
-        add_to_inventory("map", player1)
-        player1.has_map = True
+        explore_mountain_pass(player1)
     elif decision == "3":
-        if player1.has_lantern:
-            print("You go into the dark cave")
-            add_to_inventory("treasure", player1)
-        else:
-            print("It's too dark in the cave. Try to find something to illuminate your way")
+        explore_cave(player1)
     elif decision == "4":
-        if player1.has_map:
-            print("You go into the hidden valley with a bowl of salad")
-            add_to_inventory("rare herbs", player1)
-        else:
-            print("You can't find the valley without directions")
+        explore_hidden_valley(player1)
     elif decision == "5":
         print("Confused, you stand still, unsure of what to do.")
     elif decision == "i":
