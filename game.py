@@ -43,7 +43,9 @@ while (True):
     # Ask the player for their first decision
     decision = input("\t1. Take the left path into the dark woods\n"
                     "\t2. Take the right path towards the mountain pass\n"
-                    "\t3. Stay where you are \n"
+                    "\t3. Go into a nearby cave\n"
+                    "\t4. Explore the hidden valley\n"
+                    "\t5. Stay where you are \n"
                     "\tType 'i' to view your inventory ").lower()
 
     # conditional evaluate
@@ -57,6 +59,18 @@ while (True):
         add_to_inventory("map", player1)
         player1.has_map = True
     elif decision == "3":
+        if player1.has_lantern:
+            print("You go into the dark cave")
+            add_to_inventory("treasure", player1)
+        else:
+            print("It's too dark in the cave. Try to find something to illuminate your way")
+    elif decision == "4":
+        if player1.has_map:
+            print("You go into the hidden valley with a bowl of salad")
+            add_to_inventory("rare herbs", player1)
+        else:
+            print("You can't find the valley without directions")
+    elif decision == "5":
         print("Confused, you stand still, unsure of what to do.")
     elif decision == "i":
         print(player1.inventory)
