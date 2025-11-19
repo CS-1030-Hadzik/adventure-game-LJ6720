@@ -53,6 +53,7 @@ def explore_cave(player):
         add_to_inventory("treasure", player)
     else:
         print("It's too dark in the cave. Try to find something to illuminate your way")
+        player.health -= 10
 
 def explore_hidden_valley(player):
     if player.has_map:
@@ -60,11 +61,32 @@ def explore_hidden_valley(player):
         add_to_inventory("rare herbs", player)
     else:
         print("You can't find the valley without directions")
+        player.health -= 10
+
+def stay_still(player):
+    print("Confused, you stand still, unsure of what to do.")
+    player.health -= 10
+
+def check_win(player):
+    if "treasure" and "rare herbs" in player.inventory:
+        print("You have won the game!")
+        return True
+    else:
+        return False
+    
+def check_lost(player):
+    if player.health <= 0:
+        print("Your health has gone to 0. You die!")
+        return True
+    else:
+        return False
 
 player1 = welcome_player() #returns a player object
 describe_area()
 
-while (True):
+has_won = False
+
+while (not has_won):
     # Ask the player for their first decision
     decision = input("\t1. Take the left path into the dark woods\n"
                     "\t2. Take the right path towards the mountain pass\n"
@@ -84,8 +106,14 @@ while (True):
     elif decision == "4":
         explore_hidden_valley(player1)
     elif decision == "5":
-        print("Confused, you stand still, unsure of what to do.")
+        stay_still(player1)
     elif decision == "i":
         print(player1.inventory)
     else:
         print("That is not a valid choice")
+    
+    print("Your health is:", player1.health)
+    has_lost = check_lost(player1)
+    if has_lost:
+        break
+    has_won = check_win(player1)
